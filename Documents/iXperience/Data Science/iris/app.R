@@ -49,7 +49,8 @@ ui <- fluidPage(
       
       # Show a plot of the generated distribution
       mainPanel(
-         textOutput("prediction")
+         textOutput("prediction"),
+         plotOutput("displot")
       )
    )
 )
@@ -65,8 +66,11 @@ server <- function(input, output) {
         Petal.Width = input$petal_width)
       
       species = predict(fit,new_data, type = "class")
-      print(new_data)
       paste("The species is: ", species) 
+   })
+   
+   output$displot = renderPlot({
+     fancyRpartPlot(fit)
    })
 }
 
